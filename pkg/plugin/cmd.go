@@ -7,6 +7,7 @@ import (
 	"io"
 	"net/http"
 	"net/url"
+	"net"
 	"os"
 	"os/user"
 	"strconv"
@@ -428,7 +429,7 @@ func (o *DebugOptions) Run() error {
 		} else {
 			targetHost = pod.Status.HostIP
 		}
-		uri, err := url.Parse(fmt.Sprintf("http://%s:%d", targetHost, o.AgentPort))
+		uri, err := url.Parse(fmt.Sprintf("http://%s", net.JoinHostPort(targetHost, strconv.Itoa(o.AgentPort))))
 		if err != nil {
 			return err
 		}
